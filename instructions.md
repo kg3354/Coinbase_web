@@ -1,14 +1,18 @@
 # This is the instructions for Silver 8 Capital SWE Round 2 Take Home Assignment. Author: Kaiwen Guo. Email: kg3354@nyu.edu 
 
 ## I will list the updates in a daily mannar, such that it is easiler to trace. 
+
 ## I have designed a similar web application before, which could be seen in https://github.com/kg3354/Jail-Database. It uses Flask to host the server, and used PHPMyAdmin for the database. 
 
-###Day 1, May 25 2024
+
+### Day 1, May 25 2024 
 I first retrived the API from 1Password, and the API configuration for me is
+```
 passphrase: 0aeaqko06fge
 secret: LPvA+3buf65E0eDgBe6cFCuSNXp5uv/jn/9d8gTLXgJIEkpBhI5ZBhcYFe1VmjyxR2+SBUHDJXPQId2oBuaAsA==
 key: 01f1b83c19f7c29463da79a137e38f1d
 docs: https://docs.cloud.coinbase.com/exchange/docs/sandbox
+```
 
 I tried to use existing Python librarys for coinbase, but i do not want to violate the requirement 'Coinbase’s API'
 Thus, i navigated to 
@@ -16,7 +20,7 @@ Thus, i navigated to
 https://docs.cdp.coinbase.com/exchange/reference/exchangerestapi_getproducts/
 https://docs.cdp.coinbase.com/exchange/reference/exchangerestapi_getproductcandles/
 
-###To setup the environment:
+### To setup the environment:
 To create a new package.json file:
 ```
     npm init -y
@@ -28,7 +32,7 @@ To install axois:
 
 I then created 2 simple NodeJs applications, one corresponding to each. The are called get_all_know_trading_pairs.js and bit_now.js
 
-###get_all_know_trading_pairs.js: 
+### get_all_know_trading_pairs.js: 
 
 Only the get all known trading pair requires API authentication. I currently wrote the scirpts into the code directly, will modify into a config file or ini file in the future. 
 The get_all_know_trading_pairs.js will return an array of variables including account id, currency, balance, availablity, hold, trading enabled, and pending enabled.
@@ -111,7 +115,7 @@ Pending Deposit: 0.0000000000000000
 
 ```
 
-###bit_now.js
+### bit_now.js
 
 The bit_now.js is then a calling the getproductcandles api and retriving the bitcoin price within a time range identified by the user. User needs to specify the start time, end time, and granularity. Many error checking was implemented, such as checking the format of user input, and adjust the granularity to match the required values: [60, 300, 900, 3600, 21600, 86400]. The default for starting time is a day earlier than 'now', default end time is 'now', and default granularity is 3600(1 hour).
 By using all default values, the outputs are:
