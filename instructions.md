@@ -5,7 +5,7 @@
 ## I have designed a similar web application before, which could be seen in https://github.com/kg3354/Jail-Database. It uses Flask to host the server, and used PHPMyAdmin for the database. 
 
 
-### Day 1, May 25 2024 
+## Day 1, May 25 2024 
 I first retrived the API from 1Password, and the API configuration for me is
 ```
 passphrase: 0aeaqko06fge
