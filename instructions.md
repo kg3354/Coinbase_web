@@ -329,3 +329,33 @@ Today's work is pushed to github:
 https://github.com/kg3354/Coinbase_web.git
 
 
+
+## Day 2, May 26 2024 
+
+I first created a directory named day1, and I moved all the day1's work (get_all_know_trading_pairs.js and bit_now.js) into day1 directory for consistency.
+
+Today is the day before Momorials day, thus I did not spend much time on the project. My goal for today is to have the backend and frontend skeleton ready using the most simple manner. They still uses the same logic from bit_now.js, and their goal is to now be able to retrive Bitcoin price using web. 
+
+I chose to use NodeJs Server and React frontend. I created 3 files, server_day2.js as the NodeJs Server, App.js to receive user input, and PriceChart.js to display the data. All the API calls was achieved in server_day2.js, the App.js sets up the basic structure of the user interface, and PriceChart.js is displaying the results of bitcoin price in a friendly manner. 
+
+I first added the new packages for todays task and the react directory named day2. The naming is to match each days work. 
+
+```
+npm install express axios cors
+
+npx create-react-app day2
+cd day2
+npm install axios chart.js react-chartjs-2
+npm install bootstrap
+npm install chartjs-adapter-date-fns
+
+```
+
+
+I now made it possible for the server_day2.js and App.js to talk to each other, but I am encountering many different kinds of problems regarding the PriceChart.js. I believe it is due to the formating of the returned data, but i am not certain and need more testing. I am by current work saved and will continue next time. 
+
+The total of hour spend today is 1 hour, from 5:30 to 6:24, and todays work is pushed to github same repo. 
+
+Nexttime, i need to fix the request error, build the asset page, and more UI design. 
+
+

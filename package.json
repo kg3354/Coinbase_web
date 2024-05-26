@@ -1,7 +1,7 @@
 {
   "name": "coinbase_web",
   "version": "1.0.0",
-  "description": "",
+  "description": "## Please see instructions.md for detailed daily progress report.",
   "main": "get_all_know_trading_pairs.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.7.2"
+    "axios": "^1.7.2",
+    "chart.js": "^4.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "react-chartjs-2": "^5.2.0"
   }
 }
