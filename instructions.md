@@ -359,3 +359,91 @@ The total of hour spend today is 1 hour, from 5:30 to 6:24, and todays work is p
 Nexttime, i need to fix the request error, build the asset page, and more UI design. 
 
 
+
+## Day 3, May 27 2024 - Approach 1
+
+Today I found https://github.com/renaissancetroll/reactjs-crypto-api-dashboard/tree/master/src, which does similar functionality as what i was trying to accomplished yesterday. I recall that Mr Lim said that we could use all the resources we found online, thus i cloned this git repo and build from there.
+
+Inside my Coinbase web directory,
+```
+mkdir day3
+cd day3
+git clone https://github.com/renaissancetroll/reactjs-crypto-api-dashboard.git
+```
+
+
+## Day 3, May 27 2024 - Approach 2
+
+The previous approach did not work for me. It requires a lower version of Node.JS, and i do not want to downgrade it as more vulnerbilities could occur. I deleted that day3 folder and started again based on day2's work. I tried to make it more simple this time, limiting user input for now and will build on that.
+
+Today the main focus is on 3 files, server_day3.js, App.js, and BitcoinPriceGraph.js. Their functionalities are the same as day2, but BitcoinPriceGraph.js replaced PriceChart.js from day2.
+
+### Set Up
+
+To set up the environment for server_day3.js, in the same directory, run
+
+```
+npm install express cors axios express-rate-limit moment moment-timezone
+
+```
+
+Then, navigate to day3 folder and then the src folder. To include all the necessary dependencies
+```
+cd src
+npm install
+npm install axios react-chartjs-2 chart.js @babel/plugin-proposal-private-property-in-object
+
+
+```
+
+Now by running both server_day3.js by
+```
+node server_day3.js
+```
+and then navigate to the day3 folder and running
+```
+npm start
+```
+
+### result
+I get a very simple line graph of bitcoin price shown in 
+![Very simple line graph](day3_approach2.png) 
+
+It only contains a hard coded time range and granularity, which i will modify now directly on the server and corresponding files.
+
+There are error logs when the granularity is too small similar to day 1's approach, and I updated App.js to remove the Update Button and automatically fetches data, just because i realized my original approach doesnt really the button and it is more user friendly this way. I then updated server_day3.js to make sure the end date does not exceed the current date. 
+
+The App.js also didnt handle timezone correctly, and it is fixed in this update
+
+
+### All product types
+
+I realized that i am only playing wiht bitcoins for now, and i need to at least find all the product types coinbase api supports so that i can call.
+
+The corresponding all_product.js is written in day3 folder, and to run it simply use
+```
+node all_produce.js
+```
+
+As a result, the result, which is a sequence of the following, was written to a text file named volume-summary.txt under directory day3. 
+```
+id
+base_currency
+quote_currency
+display_name
+market_types
+spot_volume_24hour
+spot_volume_30day
+rfq_volume_24hour
+rfq_volume_30day
+conversion_volume_24hour
+conversion_volume_30day
+```
+
+I can then retrieve the id, to let user choose their base currency and quote currency, and call the script to get the results they need. 
+
+My next goal is to have the home page ready, and user can choose from there. 
+
+Currently time spend from 3:11 PM to 5:37 PM, a total of 2 hours 20 min. Current work is also pushed to github.
+
+## Day 3, May 27 2024 - Main page
