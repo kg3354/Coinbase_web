@@ -30,15 +30,15 @@ To install axois:
     npm install axios
 ```
 
-I then created 2 simple NodeJs applications, one corresponding to each. The are called get_all_know_trading_pairs.js and bit_now.js
+I then created 2 simple NodeJs applications, one corresponding to each. The are called my_asset.js and bit_now.js
 
-### get_all_know_trading_pairs.js: 
+### my_asset.js: 
 
 Only the get all known trading pair requires API authentication. I currently wrote the scirpts into the code directly, will modify into a config file or ini file in the future. 
-The get_all_know_trading_pairs.js will return an array of variables including account id, currency, balance, availablity, hold, trading enabled, and pending enabled.
+The my_asset.js will return an array of variables including account id, currency, balance, availablity, hold, trading enabled, and pending enabled.
 The outputs by running the script is:
 ```
-(base) guobuzai@10-18-239-243 Coinbase_Web % node get_all_know_trading_pairs.js
+(base) guobuzai@10-18-239-243 Coinbase_Web % node my_asset.js
 Account Information:
 Account ID: 9028c2b2-eb07-4f19-af23-bf7a8f5296d7
 Currency: BAT (BAT)
@@ -447,3 +447,70 @@ My next goal is to have the home page ready, and user can choose from there.
 Currently time spend from 3:11 PM to 5:37 PM, a total of 2 hours 20 min. Current work is also pushed to github.
 
 ## Day 3, May 27 2024 - Main page
+
+The first thing i realized that is my previous approach on getting the trading pair is wrong. I called the wrong api, and i changed my Day1's instructions to what i wrongly used. That API call is actually getting my asset pairs from the sandbox. I wrote a new NodeJs file that actually gets the correct pair. 
+
+The new all_product.js file does what i intentially do, which is getting the possible trading pairs. It genearete a json file containing the useable pairs, and now i can choose the pairs freely.
+
+to get the pair:
+
+```
+node all_product.js
+```
+And then manully move the currencyPairs.json to src. This needs to be changed for efficiency.
+
+The currencyPairs.json looks like:
+```
+{
+    "00": [
+        "USD"
+    ],
+    "1INCH": [
+        "BTC",
+        "EUR",
+        "GBP",
+        "USD"
+    ],
+    "AAVE": [
+        "BTC",
+        "EUR",
+        "GBP",
+        "USD"
+    ],
+    "ABT": [
+        "USD"
+    ],
+    "ACH": [
+        "USD",
+        "USDT"
+    ],
+    ...
+    ...
+    ...
+    "ZRX": [
+        "BTC",
+        "EUR",
+        "USD"
+    ]
+}
+
+```
+
+
+The new features for server_day3_mainpage update patch is that now user can choose base currency and quote currency generated from the get trading pair api call, and it dynamically change the drop down menu and the display currency cymbol. 
+
+
+The current progress after running the server_day3_mainpage,js and npx start inside the day3-mainpage directory:
+
+![Day 3 main page](day3_mainpage.jpg)
+
+
+Needs to update by next time:
+1. Add all the currency photo in the public/image directory. Currenly only contains USD and BTC. The photos are downloaded from https://www.flaticon.com/.
+2. Display the granularity. I had another misunderstanding of granularity. Each dot represent a result, not the time displayed at the bottom. I thought that was the result I get from API calls, thus was confused on what get price api actually returns as the result gap varies depending my time range. Now i realized that each dot on the line graph was indeed the result, thus I can also display the granularity time. 
+3. Maybe allow user to display the price of multiple currencies together?
+4. Add the user asset feature to the web. The Sandbox keys should be passed in through a .ini file. 
+5. Fix the all_product.js such that it runs when the server starts, and the output is generated to src folder. 
+
+I spend from 7:05 to 9:21 on this part of the project. It is a total of 2 hours 20 minutes. It is pushed to github.
+

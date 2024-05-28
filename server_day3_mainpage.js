@@ -1,4 +1,3 @@
-
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
@@ -24,7 +23,7 @@ function findNearestGranularity(granularity) {
 }
 
 app.get('/api/prices', async (req, res) => {
-  let { start, end, granularity } = req.query;
+  let { start, end, granularity, asset } = req.query;
 
   const now = moment().toISOString();
 
@@ -53,7 +52,7 @@ app.get('/api/prices', async (req, res) => {
 
   const config = {
     method: 'get',
-    url: `https://api.exchange.coinbase.com/products/BTC-USD/candles?start=${start}&end=${end}&granularity=${numericGranularity}`,
+    url: `https://api.exchange.coinbase.com/products/${asset}/candles?start=${start}&end=${end}&granularity=${numericGranularity}`,
     headers: {
       'Content-Type': 'application/json'
     }
