@@ -514,3 +514,39 @@ Needs to update by next time:
 
 I spend from 7:05 to 9:21 on this part of the project. It is a total of 2 hours 20 minutes. It is pushed to github.
 
+
+## Day 4 and Day 5, May 29, 30 2024 
+
+
+This week is very busy for me, and i did not find time to write the documentation until May 30. 
+### Update on Previou Work
+I first realized that finding all the images for the currencies are not appliable, as there are thousands of them available on Coinbase.
+Thus, I change place the base currency image into just word display. This saved me time to search for all the images.
+I still kept the image for the quote currency, to make the website looks better.
+
+Another update I had is to enable users to add currency pairs. I initially tried to write multiple lines into the same graph, but I realized that different currencies have a wide range of different prices, it indeed looks worse. Thus, I add an add currency pair button, such that users can display more graphs at the bottom. I used a white line to seperate them, also for vidualization purposes.
+
+Although I tried to add the auto refresh method, it did not work well. I think it is because I did not figure out how to automatically trigger the API call without breaking my time range protection function. I did add a set time to now button, which allowed one to set the end time to be 'now'. I will try to add this function back again later.
+
+I did add the display graunularity drop down menu back. The two buttons approach before was redundent, and I think just having a drop down menu make it simple and looks good. 
+
+
+### Key Modification (my_asset.js)
+
+- I ensured that the start time cannot exceed 1 minute before the end time, and I ensured that the end time cannot exceed 1 minute before the start time. Both typing and using the drop down calender are being protected.
+
+- I embedded the execucation of all_product.js into the start of the server. Thus, whenever the server starts, it gets all the current product pairs and write to teh working src directory for the react application to use.
+
+- I added the user sandbox asset feature to the main page. User can now just click on the top right corner where it says 'My Sandbox Asset' to access their sandbox asset. It display as its own, users are able to scroll down the asset menu without moving the main page.  It also used the App.css, which was not being used before
+
+- I movified all the 'localhost:3000' into 'http://${window.location.hostname}:3000', such that other machines in the network could also view this website. This is supported by React. Once you run npm start, you can either view it via localhost or the ip address. Only the ip address way could be reached by all machines in the network, and this change enabled them to retrieve the data without any issues
+
+
+### Conclusion on May 30
+
+I believe this project is coming to an end. Tomorrow I will start writing the testing required for this project, as well as the environment settings. I will start writing all the necessary steps including what package to install for M1 users to reproduce this project.
+
+Today's work is pushed to github. Total hour spend 6:20 - 7:20, 8:45 - 9:31.
+
+
+
