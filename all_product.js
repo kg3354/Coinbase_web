@@ -50,7 +50,7 @@ const parseAndSaveData = (products) => {
     return acc;
   }, {});
 
-  saveToJson(sortedCurrencyDict, path.join(__dirname, 'day4/src/currencyPairs.json'));
+  saveToJson(sortedCurrencyDict, path.join(__dirname, 'App/src/currencyPairs.json'));
 };
 
 // Send the request

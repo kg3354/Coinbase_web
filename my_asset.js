@@ -1,9 +1,13 @@
 const axios = require('axios');
 const crypto = require('crypto');
+const fs = require('fs');
 
-const apiSecret = 'LPvA+3buf65E0eDgBe6cFCuSNXp5uv/jn/9d8gTLXgJIEkpBhI5ZBhcYFe1VmjyxR2+SBUHDJXPQId2oBuaAsA==';
-const apiKey = '01f1b83c19f7c29463da79a137e38f1d';
-const passphrase = '0aeaqko06fge';
+// Load config
+const config = JSON.parse(fs.readFileSync('Asset.config', 'utf8'));
+
+const apiSecret = config.apiSecret;
+const apiKey = config.apiKey;
+const passphrase = config.passphrase;
 
 const timestamp = Date.now() / 1000; // Timestamp in seconds
 const requestPath = '/accounts';
@@ -15,7 +19,7 @@ const key = Buffer.from(apiSecret, 'base64');
 const hmac = crypto.createHmac('sha256', key);
 const sign = hmac.update(what).digest('base64');
 
-let config = {
+let configRequest = {
     method: method,
     url: `https://api-public.sandbox.pro.coinbase.com${requestPath}`,
     headers: {
@@ -27,7 +31,7 @@ let config = {
     }
 };
 
-axios.request(config)
+axios.request(configRequest)
 .then((response) => {
     const accountInfo = response.data.map(account => ({
         id: account.id,

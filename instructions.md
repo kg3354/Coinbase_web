@@ -407,7 +407,7 @@ npm start
 
 ### result
 I get a very simple line graph of bitcoin price shown in 
-![Very simple line graph](day3_approach2.png) 
+![Very simple line graph](progress_image/day3_approach2.png) 
 
 It only contains a hard coded time range and granularity, which i will modify now directly on the server and corresponding files.
 
@@ -502,7 +502,7 @@ The new features for server_day3_mainpage update patch is that now user can choo
 
 The current progress after running the server_day3_mainpage,js and npx start inside the day3-mainpage directory:
 
-![Day 3 main page](day3_mainpage.jpg)
+![Day 3 main page](progress_image/day3_mainpage.jpg)
 
 
 Needs to update by next time:
@@ -550,3 +550,21 @@ Today's work is pushed to github. Total hour spend 6:20 - 7:20, 8:45 - 9:31.
 
 
 
+## Day 6, May 31 2024 
+
+Today's main focus will be the testing plan. Tomorrow I will create a virtual environment to list all the necessary steps and write out the final report. For today, as the instruction stated that we are not required to test the application extensively or achieve a high code coverage score, I will list my testing plan below.
+
+The detailed testing plan is written under: TestingPlan.md
+
+I also made the modification of my_asset.js, such that it gets Coinbase Sandbox information from the Asset.config. This is more secure and professional. 
+
+I then created the final server.js, and the corresponding App.js directory. These are the final directory and server script that will be used. I also modified all_product.js such that the result json file is written to App/src instead of Day4/src
+
+The display of the final product is shown below:
+
+![Day 6](progress_image/day6.jpg)
+
+P.S. THe TestingPlan.md is not final.
+
+Todays work is pushed to github: https://github.com/kg3354/Coinbase_web.git
+Total hour spend today: 4:37 - 5:31
