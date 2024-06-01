@@ -3,9 +3,9 @@ const cors = require('cors');
 const axios = require('axios');
 const rateLimit = require('express-rate-limit');
 const moment = require('moment-timezone');
-const { execFile } = require('child_process');
+const { exec } = require('child_process');
 const path = require('path');
-require('dotenv').config();
+const { spawn } = require('child_process');
 
 const app = express();
 app.use(cors({
@@ -21,7 +21,7 @@ app.use(rateLimit({
 
 // Function to run all_product.js
 const runAllProductScript = () => {
-  execFile('node', ['all_product.js'], (error, stdout, stderr) => {
+  exec('node all_product.js', (error, stdout, stderr) => {
     if (error) {
       console.error(`Error executing all_product.js: ${error.message}`);
       return;
@@ -89,7 +89,7 @@ app.get('/api/prices', async (req, res) => {
 });
 
 app.get('/api/sandbox-assets', (req, res) => {
-  execFile('node', ['my_asset.js'], (error, stdout, stderr) => {
+  exec('node my_asset.js', (error, stdout, stderr) => {
     if (error) {
       console.error(`Error executing my_asset.js: ${error.message}`);
       return res.status(500).send('Failed to fetch sandbox assets.');
@@ -113,24 +113,27 @@ app.post('/api/chat', (req, res) => {
   if (!message) {
     return res.status(400).send('Message is required');
   }
-  console.log('Getting repsponse')
 
-  execFile('python3', ['openai_chat.py', message], (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error executing openai_chat.py: ${error.message}`);
-      return res.status(500).send('Failed to fetch response from OpenAI');
-    }
-    if (stderr) {
-      console.error(`Error output: ${stderr}`);
-      return res.status(500).send('Failed to fetch response from OpenAI');
+  const pythonProcess = spawn('python3', ['openai_chat.py', message]);
+
+  let output = '';
+  pythonProcess.stdout.on('data', (data) => {
+    output += data.toString();
+  });
+
+  pythonProcess.stderr.on('data', (data) => {
+    console.error(`Error from Python script: ${data.toString()}`);
+  });
+
+  pythonProcess.on('close', (code) => {
+    if (code !== 0) {
+      return res.status(500).send({ error: 'Failed to get response from OpenAI' });
     }
     try {
-      
-      const data = JSON.parse(stdout);
-      res.json(data);
-    } catch (parseError) {
-      console.error(`Error parsing JSON: ${parseError.message}`);
-      res.status(500).send('Failed to parse response from OpenAI');
+      const response = JSON.parse(output);
+      res.json(response);
+    } catch (err) {
+      res.status(500).send({ error: 'Failed to parse response from OpenAI' });
     }
   });
 });

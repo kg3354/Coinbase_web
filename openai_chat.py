@@ -15,7 +15,7 @@ def main():
         completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a professional digital currency trader, and you are good at explaining different pros and cons of digital currencies to others"},
+                {"role": "system", "content": "You are a professional digital currency trader, and you are good at explaining different pros and cons of digital currencies to others."},
                 {"role": "user", "content": user_message}
             ]
         )

@@ -1,12 +1,11 @@
 # This is the instructions for Silver 8 Capital SWE Round 2 Take Home Assignment. Author: Kaiwen Guo. Email: kg3354@nyu.edu 
 
-## I will list the updates in a daily mannar, such that it is easiler to trace. 
+## I will list the updates in a daily manner, such that it is easier to trace. 
 
 ## I have designed a similar web application before, which could be seen in https://github.com/kg3354/Jail-Database. It uses Flask to host the server, and used PHPMyAdmin for the database. 
 
-
 ## Day 1, May 25 2024 
-I first retrived the API from 1Password, and the API configuration for me is
+I first retrieved the API from 1Password, and the API configuration for me is
 ```
 passphrase: 0aeaqko06fge
 secret: LPvA+3buf65E0eDgBe6cFCuSNXp5uv/jn/9d8gTLXgJIEkpBhI5ZBhcYFe1VmjyxR2+SBUHDJXPQId2oBuaAsA==
@@ -14,13 +13,13 @@ key: 01f1b83c19f7c29463da79a137e38f1d
 docs: https://docs.cloud.coinbase.com/exchange/docs/sandbox
 ```
 
-I tried to use existing Python librarys for coinbase, but i do not want to violate the requirement 'Coinbase’s API'
-Thus, i navigated to 
+I tried to use existing Python libraries for Coinbase, but I do not want to violate the requirement 'Coinbase’s API'
+Thus, I navigated to 
 
 https://docs.cdp.coinbase.com/exchange/reference/exchangerestapi_getproducts/
 https://docs.cdp.coinbase.com/exchange/reference/exchangerestapi_getproductcandles/
 
-### To setup the environment:
+### To set up the environment:
 To create a new package.json file:
 ```
     npm init -y
@@ -117,7 +116,7 @@ Pending Deposit: 0.0000000000000000
 
 ### bit_now.js
 
-The bit_now.js is then a calling the getproductcandles api and retriving the bitcoin price within a time range identified by the user. User needs to specify the start time, end time, and granularity. Many error checking was implemented, such as checking the format of user input, and adjust the granularity to match the required values: [60, 300, 900, 3600, 21600, 86400]. The default for starting time is a day earlier than 'now', default end time is 'now', and default granularity is 3600(1 hour).
+The bit_now.js is then called the getproductcandles api and retrieving the bitcoin price within a time range identified by the user. The user needs to specify the start time, end time, and granularity. Many error checking was implemented, such as checking the format of user input, and adjust the granularity to match the required values: [60, 300, 900, 3600, 21600, 86400]. The default for starting time is a day earlier than 'now', the default end time is 'now', and default granularity is 3600(1 hour).
 By using all default values, the outputs are:
 ```
 (base) guobuzai@10-18-239-243 Coinbase_Web % node bit_now.js
@@ -322,23 +321,22 @@ Fetching data from 2024-05-24T20:34:56Z to 2024-05-25T20:34:58Z with granularity
 
 ```
 
-Today's main goal is to know the two major api calls, and understand how to use then using NodeJs. 
+Today's main goal is to know the two major API calls, and understand how to use them using NodeJs. 
 The time used today is from Saturday, May 25, 2024 at 3:07 PM to Saturday, May 25, 2024 at 4:36 PM, a total of 1.5 Hours.
 
-Today's work is pushed to github:
+Today's work is pushed to GitHub:
 https://github.com/kg3354/Coinbase_web.git
-
 
 
 ## Day 2, May 26 2024 
 
 I first created a directory named day1, and I moved all the day1's work (get_all_know_trading_pairs.js and bit_now.js) into day1 directory for consistency.
 
-Today is the day before Momorials day, thus I did not spend much time on the project. My goal for today is to have the backend and frontend skeleton ready using the most simple manner. They still uses the same logic from bit_now.js, and their goal is to now be able to retrive Bitcoin price using web. 
+Today is the day before Memorials day, thus I did not spend much time on the project. My goal for today is to have the backend and frontend skeleton ready using the most simple manner. They still use the same logic from bit_now.js, and their goal is to now be able to retrieve Bitcoin prices using web. 
 
 I chose to use NodeJs Server and React frontend. I created 3 files, server_day2.js as the NodeJs Server, App.js to receive user input, and PriceChart.js to display the data. All the API calls was achieved in server_day2.js, the App.js sets up the basic structure of the user interface, and PriceChart.js is displaying the results of bitcoin price in a friendly manner. 
 
-I first added the new packages for todays task and the react directory named day2. The naming is to match each days work. 
+I first added the new packages for today’s task and the react directory named day2. The naming is to match each day’s work. 
 
 ```
 npm install express axios cors
@@ -351,18 +349,16 @@ npm install chartjs-adapter-date-fns
 
 ```
 
-
 I now made it possible for the server_day2.js and App.js to talk to each other, but I am encountering many different kinds of problems regarding the PriceChart.js. I believe it is due to the formating of the returned data, but i am not certain and need more testing. I am by current work saved and will continue next time. 
 
-The total of hour spend today is 1 hour, from 5:30 to 6:24, and todays work is pushed to github same repo. 
+The total of hour spend today is 1 hour, from 5:30 to 6:24, and todays work is pushed to the same repo. 
 
-Nexttime, i need to fix the request error, build the asset page, and more UI design. 
-
+Next time, i need to fix the request error, build the asset page, and more UI design. 
 
 
 ## Day 3, May 27 2024 - Approach 1
 
-Today I found https://github.com/renaissancetroll/reactjs-crypto-api-dashboard/tree/master/src, which does similar functionality as what i was trying to accomplished yesterday. I recall that Mr Lim said that we could use all the resources we found online, thus i cloned this git repo and build from there.
+Today I found https://github.com/renaissancetroll/reactjs-crypto-api-dashboard/tree/master/src, which does similar functionality as what I was trying to accomplished yesterday. I recall that Mr Lim said that we could use all the resources we found online, thus I cloned this git repo and built from there.
 
 Inside my Coinbase web directory,
 ```
@@ -371,10 +367,9 @@ cd day3
 git clone https://github.com/renaissancetroll/reactjs-crypto-api-dashboard.git
 ```
 
-
 ## Day 3, May 27 2024 - Approach 2
 
-The previous approach did not work for me. It requires a lower version of Node.JS, and i do not want to downgrade it as more vulnerbilities could occur. I deleted that day3 folder and started again based on day2's work. I tried to make it more simple this time, limiting user input for now and will build on that.
+The previous approach did not work for me. It requires a lower version of Node.JS, and i do not want to downgrade it as more vulnerabilities could occur. I deleted that day3 folder and started again based on day2's work. I tried to make it more simple this time, limiting user input for now and will build on that.
 
 Today the main focus is on 3 files, server_day3.js, App.js, and BitcoinPriceGraph.js. Their functionalities are the same as day2, but BitcoinPriceGraph.js replaced PriceChart.js from day2.
 
@@ -392,7 +387,6 @@ Then, navigate to day3 folder and then the src folder. To include all the necess
 cd src
 npm install
 npm install axios react-chartjs-2 chart.js @babel/plugin-proposal-private-property-in-object
-
 
 ```
 
@@ -414,7 +408,6 @@ It only contains a hard coded time range and granularity, which i will modify no
 There are error logs when the granularity is too small similar to day 1's approach, and I updated App.js to remove the Update Button and automatically fetches data, just because i realized my original approach doesnt really the button and it is more user friendly this way. I then updated server_day3.js to make sure the end date does not exceed the current date. 
 
 The App.js also didnt handle timezone correctly, and it is fixed in this update
-
 
 ### All product types
 
@@ -448,9 +441,9 @@ Currently time spend from 3:11 PM to 5:37 PM, a total of 2 hours 20 min. Current
 
 ## Day 3, May 27 2024 - Main page
 
-The first thing i realized that is my previous approach on getting the trading pair is wrong. I called the wrong api, and i changed my Day1's instructions to what i wrongly used. That API call is actually getting my asset pairs from the sandbox. I wrote a new NodeJs file that actually gets the correct pair. 
+The first thing i realized that is my previous approach to getting the trading pair is wrong. I called the wrong api, and i changed my Day1's instructions to what i wrongly used. That API call is actually getting my asset pairs from the sandbox. I wrote a new NodeJs file that actually gets the correct pair. 
 
-The new all_product.js file does what i intentially do, which is getting the possible trading pairs. It genearete a json file containing the useable pairs, and now i can choose the pairs freely.
+The new all_product.js file does what I intentially do, which is getting the possible trading pairs. It generate a json file containing the useable pairs, and now I can choose the pairs freely.
 
 to get the pair:
 
@@ -496,14 +489,11 @@ The currencyPairs.json looks like:
 
 ```
 
-
 The new features for server_day3_mainpage update patch is that now user can choose base currency and quote currency generated from the get trading pair api call, and it dynamically change the drop down menu and the display currency cymbol. 
-
 
 The current progress after running the server_day3_mainpage,js and npx start inside the day3-mainpage directory:
 
 ![Day 3 main page](progress_image/day3_mainpage.jpg)
-
 
 Needs to update by next time:
 1. Add all the currency photo in the public/image directory. Currenly only contains USD and BTC. The photos are downloaded from https://www.flaticon.com/.
@@ -514,40 +504,35 @@ Needs to update by next time:
 
 I spend from 7:05 to 9:21 on this part of the project. It is a total of 2 hours 20 minutes. It is pushed to github.
 
-
 ## Day 4 and Day 5, May 29, 30 2024 
 
-
 This week is very busy for me, and i did not find time to write the documentation until May 30. 
-### Update on Previou Work
+### Update on Previous Work
 I first realized that finding all the images for the currencies are not appliable, as there are thousands of them available on Coinbase.
-Thus, I change place the base currency image into just word display. This saved me time to search for all the images.
+Thus, I change place the base currency image into just a word display. This saved me time to search for all the images.
 I still kept the image for the quote currency, to make the website looks better.
 
-Another update I had is to enable users to add currency pairs. I initially tried to write multiple lines into the same graph, but I realized that different currencies have a wide range of different prices, it indeed looks worse. Thus, I add an add currency pair button, such that users can display more graphs at the bottom. I used a white line to seperate them, also for vidualization purposes.
+Another update I had is to enable users to add currency pairs. I initially tried to write multiple lines into the same graph, but I realized that different currencies have a wide range of different prices, it indeed looks worse. Thus, I added an add currency pair button, such that users can display more graphs at the bottom. I used a white line to separate them, also for visualization purposes.
 
 Although I tried to add the auto refresh method, it did not work well. I think it is because I did not figure out how to automatically trigger the API call without breaking my time range protection function. I did add a set time to now button, which allowed one to set the end time to be 'now'. I will try to add this function back again later.
 
-I did add the display graunularity drop down menu back. The two buttons approach before was redundent, and I think just having a drop down menu make it simple and looks good. 
-
+I did add the display granularity drop-down menu back. The two buttons approach before was redundant, and I think just having a drop down menu make it simple and looks good. 
 
 ### Key Modification (my_asset.js)
 
-- I ensured that the start time cannot exceed 1 minute before the end time, and I ensured that the end time cannot exceed 1 minute before the start time. Both typing and using the drop down calender are being protected.
+- I ensured that the start time cannot exceed 1 minute before the end time, and I ensured that the end time cannot exceed 1 minute before the start time. Both typing and using the drop down calendar are being protected.
 
-- I embedded the execucation of all_product.js into the start of the server. Thus, whenever the server starts, it gets all the current product pairs and write to teh working src directory for the react application to use.
+- I embedded the execution of all_product.js into the start of the server. Thus, whenever the server starts, it gets all the current product pairs and write to teh working src directory for the react application to use.
 
-- I added the user sandbox asset feature to the main page. User can now just click on the top right corner where it says 'My Sandbox Asset' to access their sandbox asset. It display as its own, users are able to scroll down the asset menu without moving the main page.  It also used the App.css, which was not being used before
+- I added the user sandbox asset feature to the main page. User can now just click on the top right corner where it says 'My Sandbox Asset' to access their sandbox asset. It displays as its own, users are able to scroll down the asset menu without moving the main page.  It also used the App.css, which was not being used before
 
-- I movified all the 'localhost:3000' into 'http://${window.location.hostname}:3000', such that other machines in the network could also view this website. This is supported by React. Once you run npm start, you can either view it via localhost or the ip address. Only the ip address way could be reached by all machines in the network, and this change enabled them to retrieve the data without any issues
-
+- I changed all the 'localhost:3000' into 'http://${window.location.hostname}:3000', such that other machines in the network could also view this website. This is supported by React. Once you run npm start, you can either view it via localhost or the IP address. Only the IP address way could be reached by all machines in the network, and this change enabled them to retrieve the data without any issues
 
 ### Conclusion on May 30
 
 I believe this project is coming to an end. Tomorrow I will start writing the testing required for this project, as well as the environment settings. I will start writing all the necessary steps including what package to install for M1 users to reproduce this project.
 
 Today's work is pushed to github. Total hour spend 6:20 - 7:20, 8:45 - 9:31.
-
 
 
 ## Day 6, May 31 2024 
@@ -564,17 +549,16 @@ The display of the final product is shown below:
 
 ![Day 6](progress_image/day6.jpg)
 
-P.S. THe TestingPlan.md is not final.
+P.S. The TestingPlan.md is not final.
 
 Todays work is pushed to github: https://github.com/kg3354/Coinbase_web.git
 Total hour spend today: 4:37 - 5:31
-
 
 ## Day 7, June 1 2024 
 
 Today I believe is the last day for me to be working on this project. I had great fun so far, and I am working on wraping it up.
 
-The first thing is to clean up the TestingPlan.md so that it is more detailed and profesional. 
+The first thing is to clean up the TestingPlan.md so that it is more detailed and professional. 
 
 ### ChatGPT Chat Box
 While i was cleaning up the TestingPlan.md, i realized that I can also add a simple ChatGPT api call to my project. That seems to be really relavent to digital currency, as the use of AI to do trading is the future. I modified the server.js and the App/src/App.js to achieve my goals
@@ -585,11 +569,10 @@ npm install openai@^4.0.0
 pip install openai
 ```
 
-Since i used both openai_chat.py to do the actuall openai api fetching job, it was trigger by and passing result to the server, and the server display it on my application via the App/src/ChatBox.js script. 
+Since i used both openai_chat.py to do the actual openai api fetching job, it was trigger by and passing result to the server, and the server display it on my application via the App/src/ChatBox.js script. 
 
 ### Fixed bugs
 While I was implementing the chatgpt feature, I fixed many bugs, including the quote currency not changing when base currency changes, and the time lock is not functioning as expected.
-
 
 ### Environment 
 
@@ -601,5 +584,20 @@ docker buildx build --platform linux/amd64,linux/arm64 -t kg3354/s8oa:latest --p
 ```
 
 Since we need to make the application compatible across architectures including amd64 and arm64, we need to use docker buildx instead of a simple docker build
+
+p.s. I also realized that App is not a good name, as app is usually the default naming. I renamed my working directory to s8oa
+
+To run the application using docker, simply start docker and then 
+```
+docker pull kg3354/s8oa:latest
+docker run -p 3000:3000 -p 3001:3001 kg3354/s8oa:latest
+
+```
+Then navigate to
+```
+http://localhost:3001
+```
+
+All mandatory requirements are met in my application, I am now writing the final report under README.md
 
 

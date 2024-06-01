@@ -23,8 +23,8 @@ function ChatBox({ onClose }) {
     }
 
     setTimeout(() => {
-      setIsSending(false);  // Re-enable the input and button after 20 seconds
-    }, 20000);  // 20 seconds
+      setIsSending(false);  // Re-enable the input and button after 10 seconds
+    }, 10000);  // 10 seconds
   };
 
   return (
