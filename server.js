@@ -3,8 +3,9 @@ const cors = require('cors');
 const axios = require('axios');
 const rateLimit = require('express-rate-limit');
 const moment = require('moment-timezone');
-const { exec } = require('child_process');
+const { execFile } = require('child_process');
 const path = require('path');
+require('dotenv').config();
 
 const app = express();
 app.use(cors({
@@ -20,7 +21,7 @@ app.use(rateLimit({
 
 // Function to run all_product.js
 const runAllProductScript = () => {
-  exec('node all_product.js', (error, stdout, stderr) => {
+  execFile('node', ['all_product.js'], (error, stdout, stderr) => {
     if (error) {
       console.error(`Error executing all_product.js: ${error.message}`);
       return;
@@ -41,7 +42,6 @@ function isValidDate(dateString) {
 }
 
 const allowedGranularities = [60, 300, 900, 3600, 21600, 86400];
-
 
 app.get('/api/prices', async (req, res) => {
   let { start, end, granularity, asset } = req.query;
@@ -89,7 +89,7 @@ app.get('/api/prices', async (req, res) => {
 });
 
 app.get('/api/sandbox-assets', (req, res) => {
-  exec('node my_asset.js', (error, stdout, stderr) => {
+  execFile('node', ['my_asset.js'], (error, stdout, stderr) => {
     if (error) {
       console.error(`Error executing my_asset.js: ${error.message}`);
       return res.status(500).send('Failed to fetch sandbox assets.');
@@ -108,9 +108,34 @@ app.get('/api/sandbox-assets', (req, res) => {
   });
 });
 
+app.post('/api/chat', (req, res) => {
+  const { message } = req.body;
+  if (!message) {
+    return res.status(400).send('Message is required');
+  }
+  console.log('Getting repsponse')
+
+  execFile('python3', ['openai_chat.py', message], (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error executing openai_chat.py: ${error.message}`);
+      return res.status(500).send('Failed to fetch response from OpenAI');
+    }
+    if (stderr) {
+      console.error(`Error output: ${stderr}`);
+      return res.status(500).send('Failed to fetch response from OpenAI');
+    }
+    try {
+      
+      const data = JSON.parse(stdout);
+      res.json(data);
+    } catch (parseError) {
+      console.error(`Error parsing JSON: ${parseError.message}`);
+      res.status(500).send('Failed to parse response from OpenAI');
+    }
+  });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-

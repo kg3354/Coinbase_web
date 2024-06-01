@@ -4,6 +4,7 @@ import currencyPairs from './currencyPairs.json';
 import moment from 'moment';
 import axios from 'axios';
 import './App.css';
+import ChatBox from './ChatBox'; 
 
 function App() {
   const [currencyPairsState, setCurrencyPairsState] = useState([
@@ -17,9 +18,15 @@ function App() {
   ]);
   const [sandboxAssets, setSandboxAssets] = useState([]);
   const [showSandboxAssets, setShowSandboxAssets] = useState(false);
+  const [showChatBox, setShowChatBox] = useState(false); // State for chatbox visibility
   const allowedGranularities = [60, 300, 900, 3600, 21600, 86400];
 
   const fetchSandboxAssets = async () => {
+    if (showSandboxAssets) {
+      setShowSandboxAssets(false);
+      return;
+    }
+
     console.log('Fetching sandbox assets...'); // Log to verify button click
     try {
       const response = await axios.get(`http://${window.location.hostname}:3000/api/sandbox-assets`);
@@ -51,6 +58,10 @@ function App() {
   const handleChange = (index, field, value) => {
     const newPairs = [...currencyPairsState];
     newPairs[index][field] = value;
+
+    if (field === 'base') {
+      newPairs[index].quote = currencyPairs[value][0];
+    }
 
     if (field === 'startDate' && moment(value).isSameOrAfter(moment(newPairs[index].endDate))) {
       newPairs[index].startDate = moment(newPairs[index].endDate).subtract(1, 'minutes').format('YYYY-MM-DDTHH:mm');
@@ -96,6 +107,12 @@ function App() {
         >
           My Sandbox Asset
         </button>
+        <button
+          style={{ position: 'absolute', top: '60px', right: '20px', zIndex: 1000 }}
+          onClick={() => setShowChatBox(!showChatBox)}
+        >
+          Ask GPT
+        </button>
         {showSandboxAssets && (
           <div className="sandbox-assets-container">
             <span className="close-button" onClick={() => setShowSandboxAssets(false)}>×</span>
@@ -112,6 +129,9 @@ function App() {
               </div>
             ))}
           </div>
+        )}
+        {showChatBox && (
+          <ChatBox onClose={() => setShowChatBox(false)} />
         )}
         {currencyPairsState.map((pair, index) => (
           <div key={index} style={{ borderBottom: '2px solid #ccc', paddingBottom: '20px', marginBottom: '20px' }}>
@@ -137,9 +157,20 @@ function App() {
             </div>
             <div>
               <label>Start Date: </label>
-              <input type="datetime-local" value={pair.startDate} onChange={e => handleChange(index, 'startDate', e.target.value)} />
+              <input 
+                type="datetime-local" 
+                value={pair.startDate} 
+                onChange={e => handleChange(index, 'startDate', e.target.value)} 
+                max={moment(pair.endDate).subtract(1, 'minutes').format('YYYY-MM-DDTHH:mm')}
+              />
               <label>End Date: </label>
-              <input type="datetime-local" value={pair.endDate} onChange={e => handleChange(index, 'endDate', e.target.value)} />
+              <input 
+                type="datetime-local" 
+                value={pair.endDate} 
+                onChange={e => handleChange(index, 'endDate', e.target.value)} 
+                max={moment().format('YYYY-MM-DDTHH:mm')}
+                min={moment(pair.startDate).add(1, 'minutes').format('YYYY-MM-DDTHH:mm')}
+              />
               <label>Granularity: </label>
               <select value={pair.granularity} onChange={e => handleChange(index, 'granularity', parseInt(e.target.value))}>
                 {allowedGranularities.map(g => (

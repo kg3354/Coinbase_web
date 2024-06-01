@@ -4,6 +4,7 @@ import currencyPairs from './currencyPairs.json';
 import moment from 'moment';
 import axios from 'axios';
 import './App.css';
+import ChatBox from './ChatBox'; 
 
 function App() {
   const [currencyPairsState, setCurrencyPairsState] = useState([
@@ -113,6 +114,7 @@ function App() {
             ))}
           </div>
         )}
+        <ChatBox />
         {currencyPairsState.map((pair, index) => (
           <div key={index} style={{ borderBottom: '2px solid #ccc', paddingBottom: '20px', marginBottom: '20px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>

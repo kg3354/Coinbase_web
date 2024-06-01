@@ -568,3 +568,38 @@ P.S. THe TestingPlan.md is not final.
 
 Todays work is pushed to github: https://github.com/kg3354/Coinbase_web.git
 Total hour spend today: 4:37 - 5:31
+
+
+## Day 7, June 1 2024 
+
+Today I believe is the last day for me to be working on this project. I had great fun so far, and I am working on wraping it up.
+
+The first thing is to clean up the TestingPlan.md so that it is more detailed and profesional. 
+
+### ChatGPT Chat Box
+While i was cleaning up the TestingPlan.md, i realized that I can also add a simple ChatGPT api call to my project. That seems to be really relavent to digital currency, as the use of AI to do trading is the future. I modified the server.js and the App/src/App.js to achieve my goals
+
+Another package needs to be included
+```
+npm install openai@^4.0.0
+pip install openai
+```
+
+Since i used both openai_chat.py to do the actuall openai api fetching job, it was trigger by and passing result to the server, and the server display it on my application via the App/src/ChatBox.js script. 
+
+### Fixed bugs
+While I was implementing the chatgpt feature, I fixed many bugs, including the quote currency not changing when base currency changes, and the time lock is not functioning as expected.
+
+
+### Environment 
+
+To meet the environment requirements, the best and most simple approach is completed via Docker
+I wrote a Dockerfile, and use the following command to compile:
+
+```
+docker buildx build --platform linux/amd64,linux/arm64 -t kg3354/s8oa:latest --push .    
+```
+
+Since we need to make the application compatible across architectures including amd64 and arm64, we need to use docker buildx instead of a simple docker build
+
+

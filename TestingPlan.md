@@ -1,6 +1,6 @@
 # Testing Plan
 
-The testing plan for the coinbase web project is seperated to 4 sections, which corresponds to the 4 main scripts of the project: server.js, my_asset.js, all_product.js, and App.js
+The testing plan for the coinbase web project is seperated to 4 sections, which corresponds to the 5 main scripts of the project: server.js, my_asset.js, all_product.js, the chatgpt.chatbox features, and App.js. For each of teh sections, I included unit testing, integration testing, end to end testing, functional testing, and security testing.
 
 ## Testing Plan for server.js 
 
@@ -10,14 +10,14 @@ The server should be tested to ensure it:
 - Validates and processes parameters correctly.
 - Executes external scripts and handles their output appropriately.
 - Integrates effectively with external APIs.
-- Manages errors and unexpected situations robustly.
+- Manages errors and unexpected situations correctly.
 
 
 Testing Tools: 
 
 - Jest: For running unit and integration tests.
 - Supertest: To make HTTP requests to the server within tests.
-- Mocking Libraries (e.g., jest.mock): To mock dependencies like axios and exec.
+- Mocking Libraries: To mock dependencies like axios and exec, which is heavely used in my application
 - dotenv: For managing environment variables during tests.
 
 
@@ -30,7 +30,7 @@ Testing Tools:
 - **isValidDate**:
   - Test with valid and invalid ISO strings.
   - Check for proper boolean returns.
-  - Tested manually, the locks on date works just as expected 
+  - After testing manually, the locks on date works just as expected :)
 
 
 **Middleware**
@@ -50,13 +50,19 @@ Testing Tools:
   - Mock axios to simulate API responses from the external service.
   - Test with both valid and invalid query parameters.
   - Check the response format and status codes.
-  - Tested manually, the get call functions as expected when the server is on.
+  - After testing manually by calling the http get function, the api endpoint works as expected when the server is on.
 
 - **GET /api/sandbox-assets**:
   - Mock exec to simulate both successful and error scenarios.
   - Verify the parsing and handling of stdout.
   - Test error handling when stderr or execution errors occur.
-  - Tested manually, the get call functions as expected when the server is on.
+  - After testing manually by calling the http get function, the api endpoint works as expected when the server is on.
+
+- **GET /api/chat**:
+  - Mock exec to simulate both successful and error scenarios.
+  - Verify the parsing and handling of stdout.
+  - Test error handling when stderr or execution errors occur.
+  - After testing manually by calling the http get function, the api endpoint works as expected when the server is on.
 
 
 **External Script Execution**
@@ -64,6 +70,7 @@ Testing Tools:
 - **runAllProductScript and related operations:**:
   - Mock exec to simulate the running of the script.
   - Test handling of stdout, stderr, and errors.
+  - Since it fetches the all proucts everytime the server starts, it might need to be refined when the server is running for a long period of time. 
 
 
 #### 3. End-to-End Testing
@@ -77,7 +84,8 @@ Testing Tools:
 
 - **Test for unexpected exceptions and errors in routes and middleware.**
 
-- **Ensure that all endpoints handle failures (like API downtime or invalid responses) gracefully.**
+- **Ensure that all endpoints handle failures gracefully.**
+  - Currently, when error occurs, the web will just display the error to user in red, but users are allowed to leave that error page and continue browsing that web page. 
 
 
 #### 5. Security Testing
@@ -85,8 +93,8 @@ Testing Tools:
 - **Check that all sensitive endpoints are protected against common vulnerabilities like XSS, and CSRF.**
 
 - **Verify that sensitive data is not logged or exposed in error messages or responses.**
-
-- **With this being said, the Sandbox My Asset confirguration has to be moved to config file**
+  - No sensititive data are hard written or logged in my code.
+  - With this being said, the Sandbox My Asset confirguration has to be moved to config file
 
 
 #### 6. Performance Testing
@@ -114,7 +122,7 @@ The script should be tested to ensure it:
 1. Correctly generates HMAC signatures and sets HTTP headers.
 2. Properly handles API responses, including successful data fetches and various error scenarios.
 3. Accurately processes and formats the fetched data.
-4. Manages errors robustly and logs them appropriately.
+4. Manages errors and logs them appropriately.
 
 ### Testing Tools
 - **Jest**: For running tests and asserting outcomes.
@@ -152,7 +160,7 @@ The script should be tested to ensure it:
 
 - **Error Handling**:
 
-  - Simulate various API errors (e.g., network issues, 401 Unauthorized, 500 Internal Server Errors).
+  - Simulate various API errors
 
   - Test how the script handles these errors, focusing on error logging and process exiting with an error code.
 
@@ -188,80 +196,26 @@ The script should be tested to ensure it:
 ## Testing Plan for all_product.js
 
 ### Overview
-The script should be tested to ensure it:
-1. Correctly makes HTTP requests to the Coinbase API with the appropriate headers.
-2. Accurately processes the API response into the desired data format.
-3. Correctly writes the processed data to a file.
-4. Handles errors robustly across all operations.
+The script should be tested similar to my_asset.js  
 
 ### Testing Tools
-- **Jest**: For running unit and integration tests.
-- **nock**: To mock HTTP requests and responses.
-- **mock-fs**: To mock file system operations.
-- **sinon** or **jest.spyOn()**: To spy on and assert calls to console methods and process methods.
-
+- Same as my_asset.js
 ### Detailed Testing Steps
 
-#### 1. Unit Testing
+- Same as my_asset.js
 
-##### API Request Configuration
 
-- **HTTP Request Setup**:
-  - Test that the script sets up the HTTP request with correct headers and URL.
-  - Use `nock` to mock the API endpoint and assert the request headers and method.
+## Testing Plan for ChatBox/ChatGPT Integration
 
-##### Data Processing
+### Overview
+The script should be tested similar to my_asset.js  
 
-- **parseAndSaveData Function**:
-  - Provide mock response data from the API and test the parsing logic.
-  - Ensure the function correctly structures the data into dictionaries and arrays as expected.
-  - Test sorting logic within the dictionary processing.
+### Testing Tools
+- Same as my_asset.js
+### Detailed Testing Steps
 
-##### File Operations
+- Same as my_asset.js
 
-- **saveToJson Function**:
-  - Mock the file system using `mock-fs`.
-  - Test the function's ability to write to a file correctly and handle file write errors.
-
-#### 2. Integration Testing
-
-##### End-to-End Script Execution
-
-- Mock both the API response and file system to test the script from start to finish:
-  - Use `nock` to provide a mocked successful API response.
-  - Use `mock-fs` to handle file operations.
-  - Verify that the script processes the API data and writes it to the correct file path and format.
-  - Ensure error handling is triggered appropriately under failure scenarios, such as API failures or file writing errors.
-
-#### 3. Error Handling Testing
-
-- **API Error Responses**:
-  - Simulate different error responses (e.g., 400 Bad Request, 500 Internal Server Error) and ensure they are handled correctly.
-  - Check the robustness of the script in handling network issues or timeouts.
-
-- **File Writing Errors**:
-  - Test reaction to file system errors, ensuring errors are logged and the process does not exit silently or with incorrect status.
-
-#### 4. Security Testing
-
-- **Sensitive Data Handling**:
-  - Ensure that no sensitive data from the API is logged or exposed in error messages.
-  - Test that error handling does not inadvertently log sensitive information.
-
-#### 5. Performance Testing
-
-- **Data Volume Handling**:
-  - Test the script's performance when processing large volumes of data to ensure it remains efficient and does not crash.
-
-### Continuous Integration Setup
-
-- Integrate these tests into your CI/CD pipeline to ensure they run with every commit.
-- Securely manage API keys and endpoints within the CI environment using environment variables.
-
-### Additional Considerations
-
-- **Maintainability**: As the Coinbase API evolves, ensure that the script and tests are updated to handle new data structures or endpoints.
-- **Documentation**: Keep documentation up-to-date with details on the script’s functionality and any dependencies on external APIs.
 
 
 ## Testing plan for App.js
