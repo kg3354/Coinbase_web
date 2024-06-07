@@ -100,7 +100,7 @@ function App() {
       <header className="App-header" style={{ padding: '20px', position: 'relative' }}>
         <h1>Asset Price Tracker</h1>
         <p>Author: Kaiwen Guo</p>
-        <p>Silver 8 Capital SWE Round 2 Take Home Assessment</p>
+
         <button
           style={{ position: 'absolute', top: '20px', right: '20px', zIndex: 1000 }}
           onClick={fetchSandboxAssets}

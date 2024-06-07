@@ -1,4 +1,4 @@
-# This is the instructions for Silver 8 Capital SWE Round 2 Take Home Assignment. 
+# Instructions
 ## Author: Kaiwen Guo. Email: kg3354@nyu.edu 
 
 ## Please see instructions.md for detailed daily progress report. The testing plan is under TestingPlan.md
@@ -17,7 +17,7 @@ To run the application using docker, simply start docker and then
 docker pull kg3354/s8oa:latest
 docker run -p 3000:3000 -p 3001:3001 -e OPENAI_API_KEY=your_openai_api_key_here kg3354/s8oa:latest
 ```
-You can set the OPENAI_API_KEY to your own. I also provided one via email for you to use. 
+You can set the OPENAI_API_KEY to your own. 
 
 Then navigate to
 ```
@@ -45,7 +45,7 @@ export OPENAI_API_KEY=your_openai_api_key_here
 node server.js
 ```
 
-You can set the OPENAI_API_KEY to your own. I also provided one via email for you to use. 
+You can set the OPENAI_API_KEY to your own. 
 
 
 Have another terminal inside s8oa directory, run
