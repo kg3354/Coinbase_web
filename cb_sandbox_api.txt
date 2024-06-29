@@ -1,4 +1,0 @@
-passphrase: 0aeaqko06fge
-secret: LPvA+3buf65E0eDgBe6cFCuSNXp5uv/jn/9d8gTLXgJIEkpBhI5ZBhcYFe1VmjyxR2+SBUHDJXPQId2oBuaAsA==
-key: 01f1b83c19f7c29463da79a137e38f1d
-docs: https://docs.cloud.coinbase.com/exchange/docs/sandbox

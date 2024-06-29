@@ -7,6 +7,7 @@ const moment = require('moment-timezone');
 const { exec } = require('child_process');
 const path = require('path');
 const { spawn } = require('child_process');
+const fs = require('fs');
 
 const app = express();
 app.use(cors({
@@ -89,23 +90,23 @@ app.get('/api/prices', async (req, res) => {
   }
 });
 
-app.get('/api/sandbox-assets', (req, res) => {
-  exec('node my_asset.js', (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error executing my_asset.js: ${error.message}`);
-      return res.status(500).send('Failed to fetch sandbox assets.');
+app.post('/api/save-data', (req, res) => {
+  const data = req.body;
+
+  if (!data) {
+    console.error('No data provided');
+    return res.status(400).send('No data provided');
+  }
+
+  const filePath = path.join(__dirname, 'saved_data.json');
+
+  fs.writeFile(filePath, JSON.stringify(data, null, 2), (err) => {
+    if (err) {
+      console.error('Error saving data:', err);
+      return res.status(500).send('Failed to save data');
     }
-    if (stderr) {
-      console.error(`Error output: ${stderr}`);
-      return res.status(500).send('Failed to fetch sandbox assets.');
-    }
-    try {
-      const data = JSON.parse(stdout);
-      res.json(data);
-    } catch (parseError) {
-      console.error(`Error parsing JSON: ${parseError.message}`);
-      res.status(500).send('Failed to parse sandbox assets data.');
-    }
+    console.log('Data saved successfully');
+    res.send('Data saved successfully');
   });
 });
 
